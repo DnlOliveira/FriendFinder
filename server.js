@@ -1,10 +1,32 @@
-//required npms
-var express = require('express');
-var parser = require('body-parser');
-var path = require('path');
+// *********************************************************************************
+// Server.js - This file is the initial starting point for the Node/Express server.
+// *********************************************************************************
 
+// Dependencies
+// =============================================================
+var express = require("express");
+var bodyParser = require("body-parser");
+
+
+// Sets up the Express App
+// =============================================================
 var app = express();
-var port = 3000;
+var PORT = process.env.PORT || 8080;
 
-app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.urlencoded({ extended: false }));
+// Sets up the Express app to handle data parsing
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+
+// Routes
+// =============================================================
+require("./app/routing/apiRoutes")(app);
+require("./app/routing/htmlRoutes")(app);
+
+
+// Starts the server to begin listening
+// =============================================================
+app.listen(PORT, function() {
+  console.log("App listening on PORT " + PORT);
+});

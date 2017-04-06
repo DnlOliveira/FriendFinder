@@ -194,8 +194,12 @@
 		console.log(newFriend);
 
 		$.post("/api/friends", newFriend, function(data) {
-			var modal = "<div class='modal-content'><span class='close'>&times;</span><p><img src="+data[0].photo+"><br> Name: "+data[0].name+"</p></div>";
+			var modal = "<div class='modal-content' id='modal'><span class='close'>&times;</span></p></div>";
 			$("#main-div").append(modal);
+
+			for (var i = 0; i < data.length; i++) {
+				$("#modal").append("<img src='"+data[i].photo+"'><br> Name: "+data[i].name);
+			}
 		});
 
 

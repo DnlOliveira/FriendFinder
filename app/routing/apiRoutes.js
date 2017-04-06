@@ -14,6 +14,9 @@ module.exports = function(app) {
     const numOfQuestions = 10;
     var match = []; //holds matched friend
 
+    //holds previous score total to be
+    //compared to
+    var lastCount = 0;
     //loop to go through all users
     for (var i = 0; i < friends.length; i++) {
 
@@ -27,12 +30,14 @@ module.exports = function(app) {
       //if an user's score is lower than the previous user's
       //then set him as a match or else keep the previous
       //the match (multiple users with same scores can be matches)
-      if (i == 0 || count == match[0]) {
+      if (i == 0 || count == lastCount) {
         match.push(friends[i]);
-      } else if (count < match[0]){
+      } else if (count < lastCount){
         match.length = 0;
         match.push(friends[i]);
       }
+      lastCount = count;
+      console.log(lastCount);
 
     }//for-loop
 

@@ -166,6 +166,10 @@
 			</div>
 		</div>
 
+		<div class='row'>
+			<div class='col-md-12' id='modal-div'></div>
+		</div>
+
 
 		<a href="/api/friends">API Friends List</a> | <a href="https://github.com/DnlOliveira/FriendFinder">Github Repo</a>
 	</div><!--jumbotron-->
@@ -191,17 +195,21 @@
 			newFriend.scores.push(score);
 		}
 
+		$(".chosen-select").data("placeholder", " ");
 		console.log(newFriend);
 
 		$.post("/api/friends", newFriend, function(data) {
-			var modal = "<div class='modal-content' id='modal'><span class='close'>&times;</span></p></div>";
-			$("#main-div").append(modal);
+			var modal = "<div class='modal-content' id='modal'><p><span class='close'>&times;</span></p></div>";
+			$("#modal-div").append(modal);
 
 			for (var i = 0; i < data.length; i++) {
-				$("#modal").append("<img src='"+data[i].photo+"'><br> Name: "+data[i].name);
+				$("#modal").append("<p><img src='"+data[i].photo+"'><br> Name: "+data[i].name+"</p>");
 			}
 		});
 
+	});
 
+	$(document).on("click", ".close", function() {
+		$("#modal-div").empty();
 	});
 </script>
